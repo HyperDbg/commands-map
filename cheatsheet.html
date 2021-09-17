@@ -670,7 +670,7 @@
                         <td class="content">
                             <b>(hyperdbg)</b> bl<br>
                         </td>
-                    </tr>
+                    </tr>image list
 
                     <tr><td class="header" colspan="4">Delete a breakpoint.</td></tr>
                     <tr>
@@ -733,7 +733,9 @@
                         <td class="content">
                             <b>(windbg)</b> ba w4 0xff349068<br>
                         </td>
-                        <td class="content"></td>
+                        <td class="content">
+						    <b>(hyperdbg)</b> !monitor rw 0xff349068 0xff349f50<br>
+						</td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Set a condition on a watchpoint.</td></tr>
@@ -769,7 +771,9 @@
                         <td class="content">
                             <b>(windbg)</b> bl<br>
                         </td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> events<br>
+						</td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Delete a watchpoint.</td></tr>
@@ -784,8 +788,9 @@
                         <td class="content">
                             <b>(windbg)</b> bc 1<br>
                         </td>
-                        <td class="content"></td>
-                    </tr>
+                        <td class="content">
+                            <b>(hyperdbg)</b> event c 1<br>
+                        </td>                    </tr>
 
                     </tbody></table>
                     <p>
@@ -873,20 +878,23 @@
                             <b>(lldb)</b> target variable baz <br>
                             <b>(lldb)</b> ta v baz <br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
-                    </tr>
+                        <td class="content">
+                            <b>(windbg)</b> dx baz <br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> dc baz <br>
+                        </td>                    </tr>
 
                     <tr><td class="header" colspan="4">Show the global/static variables defined in the current source file.</td></tr>
                     <tr>
-                        <td class="content">
-                            n/a<br>
-                        </td>
+                        <td class="content"></td>
                         <td class="content">
                             <b>(lldb)</b> target variable <br>
                             <b>(lldb)</b> ta v <br>
                         </td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> dx variable <br>
+                        </td>
                         <td class="content"></td>
                     </tr>
 
@@ -960,8 +968,12 @@
                               or using the print alias:<br>
                             <b>(lldb)</b> print (int) printf ("Print nine: %d.", 4 + 5)<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> .printf "Print nine: %d.", 4 + 5<br>
+						</td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> ? printf("Print nine: %d.", 4 + 5);<br>
+						</td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Creating and assigning a value to a convenience variable.</td></tr>
@@ -981,9 +993,16 @@
                           In lldb you evaluate a variable declaration expression as you would write it in C:<br>
                             <b>(lldb)</b> expr unsigned int $foo = 5<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
-                    </tr>
+                        <td class="content">
+                            <b>(windbg)</b> r $t0 = 5 <br>
+						</td>
+                        <td class="content">
+						    for global variables:<br>
+                            <b>(hyperdbg)</b> ? .foo = 5;<br>
+							for local variables:<br>
+                            <b>(hyperdbg)</b> ? foo = 5;<br>
+						</td>
+					</tr>
 
                     <tr><td class="header" colspan="4">Printing the ObjC "description" of an object.</td></tr>
                     <tr>
@@ -1009,7 +1028,7 @@
                         <td class="content">
                             <b>(lldb)</b> expr -d 1 -- [SomeClass returnAnObject]<br>
                             <b>(lldb)</b> expr -d 1 -- someCPPObjectPtrOrReference<br>
-                              or set dynamic type printing to be the default:
+                              or set dynamic type printing to be the default:<br>
                             <b>(lldb)</b> settings set target.prefer-dynamic run-target<br>
                         </td>
                         <td class="content"></td>
@@ -1260,9 +1279,13 @@
                             <b>(lldb)</b> register read --all<br>
                             <b>(lldb)</b> re r -a<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
-                    </tr>
+                        <td class="content">
+                            <b>(windbg)</b> r<br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> r<br>
+                        </td>
+						</tr>
 
                     <tr><td class="header" colspan="4">Show the values for the registers named "rax", "rsp" and "rbp" in the current thread.</td></tr>
                     <tr>
@@ -1272,8 +1295,16 @@
                         <td class="content">
                             <b>(lldb)</b> register read rax rsp rbp<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> r rax<br>
+                            <b>(windbg)</b> r rsp<br>
+                            <b>(windbg)</b> r rbp<br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> r rax<br>
+                            <b>(hyperdbg)</b> r rsp<br>
+                            <b>(hyperdbg)</b> r rbp<br>
+                        </td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Show the values for the register named "rax" in the current thread formatted as <b>binary</b>.</td></tr>
@@ -1308,9 +1339,13 @@
                             <b>(lldb)</b> x/4xw 0xbffff3c0<br>
                             <b>(lldb)</b> memory read --gdb-format 4xw 0xbffff3c0<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
-                    </tr>
+                        <td class="content">
+                            <b>(windbg)</b> dc 0xbffff3c0 l4<br>
+                        </td> 
+                        <td class="content">
+                            <b>(hyperdbg)</b> dc 0xbffff3c0 l 32<br>
+                        </td>
+					</tr>
 
                     <tr><td class="header" colspan="4">Read memory starting at the expression "argv[0]".</td></tr>
                     <tr>
@@ -1322,7 +1357,9 @@
 							<i><b>NOTE:</b> any command can inline a scalar expression result (as long as the target is stopped) using backticks around any expression:</i><br>
                             <b>(lldb)</b> memory read --size `sizeof(int)` `argv[0]`<br>
                         </td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> dc argv[0]<br>
+                        </td>
                         <td class="content"></td>
                     </tr>
 
@@ -1346,13 +1383,15 @@
                     <tr><td class="header" colspan="4">Save binary memory data starting at 0x1000 and ending at 0x2000 to a file.</td></tr>
                     <tr>
                         <td class="content">
-                            <b>(gdb)</b> dump memory /tmp/mem.bin 0x1000 0x2000
+                            <b>(gdb)</b> dump memory /tmp/mem.bin 0x1000 0x2000<br>
                         </td>
                         <td class="content">
                             <b>(lldb)</b> memory read --outfile /tmp/mem.bin --binary  0x1000 0x2000<br>
                             <b>(lldb)</b> me r -o /tmp/mem.bin -b 0x1000 0x2000<br>
                         </td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> .writemem c:\temp\mem.bin 2000 l1000<br>
+                        </td>
                         <td class="content"></td>
                     </tr>
                     <tr><td class="header" colspan="4">Get information about a specific heap allocation (available on Mac OS X only).</td></tr>
@@ -1425,8 +1464,12 @@
                             <b>(lldb)</b> disassemble --name main<br>
                             <b>(lldb)</b> di -n main
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> u main
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> u main
+                        </td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Disassemble an address range.</td></tr>
@@ -1438,8 +1481,12 @@
                             <b>(lldb)</b> disassemble --start-address  0x1eb8 --end-address 0x1ec3<br>
                             <b>(lldb)</b> di -s 0x1eb8 -e 0x1ec3<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> u 0x1eb8 l100
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> u 0x1eb8 l 100
+                        </td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Disassemble 20 instructions from a given address.</td></tr>
@@ -1451,15 +1498,17 @@
                             <b>(lldb)</b> disassemble --start-address  0x1eb8 --count 20<br>
                             <b>(lldb)</b> di -s 0x1eb8 -c 20<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> u 0x1eb8 l20
+                        </td>
+						<td class="content">
+                            <b>(hyperdbg)</b> u 0x1eb8 l 20
+                        </td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Show mixed source and disassembly for the current function for the current frame.</td></tr>
                     <tr>
-                        <td class="content">
-                            n/a
-                        </td>
+                        <td class="content"></td>
                         <td class="content">
                             <b>(lldb)</b> disassemble --frame --mixed<br>
                             <b>(lldb)</b> di -f -m
@@ -1470,9 +1519,7 @@
 
                     <tr><td class="header" colspan="4">Disassemble the current function for the current frame and show the opcode bytes.</td></tr>
                     <tr>
-                        <td class="content">
-                            n/a
-                        </td>
+                        <td class="content"></td>
                         <td class="content">
                             <b>(lldb)</b> disassemble --frame --bytes<br>
                             <b>(lldb)</b> di -f -b
@@ -1483,9 +1530,7 @@
 
                     <tr><td class="header" colspan="4">Disassemble the current source line for the current frame.</td></tr>
                     <tr>
-                        <td class="content">
-                            n/a
-                        </td>
+                        <td class="content"></td>
                         <td class="content">
                             <b>(lldb)</b> disassemble --line<br>
                             <b>(lldb)</b> di -l
@@ -1521,8 +1566,12 @@
                         <td class="content">
                             <b>(lldb)</b> image list<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> lm<br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> lm<br>
+                        </td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Look up information for a raw address in the executable or any shared libraries.</td></tr>
@@ -1534,7 +1583,9 @@
                             <b>(lldb)</b> image lookup --address 0x1ec4<br>
                             <b>(lldb)</b> im loo -a 0x1ec4<br>
                         </td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> !address 0x1ec4<br>
+                        </td>
                         <td class="content"></td>
                     </tr>
 
@@ -1613,7 +1664,9 @@
                         <td class="content">
                             <b>(lldb)</b> image dump sections a.out<br>
                         </td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> .dump /mfh a.out<br>
+                        </td>
                         <td class="content"></td>
                     </tr>
 
@@ -1661,8 +1714,13 @@
                         <td class="content">
                             <b>(lldb)</b> apropos keyword<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> .hh keyword<br>
+                        </td>
+						<td class="content">
+						It just shows the command's help:
+                            <b>(hyperdbg)</b> .help command<br>
+                        </td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Echo text to the screen.</td></tr>
@@ -1673,8 +1731,12 @@
                         <td class="content">
                             <b>(lldb)</b> script print "Here is some text"<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> .printf "Here is some text"<br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> ? printf("Here is some text");<br>
+                        </td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Remap source file pathnames for the debug session.  If your source files are no longer located in the same location as when the program was built --- maybe the program was built on a different computer --- you need to tell the debugger how to find the sources at their local file path instead of the build system's file path.</td></tr>
