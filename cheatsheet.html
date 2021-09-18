@@ -892,7 +892,20 @@
                         </td>
                         <td class="content">
                             <b>(hyperdbg)</b> dc baz <br>
-                        </td>                    </tr>
+                        </td>                 
+					</tr>
+					
+                    <tr><td class="header" colspan="4">Find the address of a global variable "baz".</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> x moduleName!baz <br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> x moduleName!baz <br>
+                        </td>                 
+					</tr>
 
                     <tr><td class="header" colspan="4">Show the global/static variables defined in the current source file.</td></tr>
                     <tr>
@@ -1331,6 +1344,14 @@
                         </td>
                         <td class="content"></td>
                         <td class="content"></td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Show the general purpose registers as different formats.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">(windbg) .formats rax</td>
+                        <td class="content">(hyperdbg) .formats @rax</td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Read memory from address 0xbffff3c0 and show 4 hex uint32_t values.</td></tr>
@@ -1897,11 +1918,35 @@
                             <b>(windbg)</b> !vtop 98fd fffff8035d3ff000<br>
                         </td>						
 						<td class="content">
-                            <b>(hyperdbg)</b> !va2pap fffff8035d3ff000<br>
-                            <b>(hyperdbg)</b> !pa2va 90e00<br>
+                            <i>Virtual to physical address conversion:</i><br>
+                            <b>(hyperdbg)</b> !va2pa fffff8035d3ff000<br>
+                            <i>Physical to virtual address conversion:</i><br>
+                         		
+                    <tr><td class="header" colspan="4">Try to hide debugger from anti-debugging methods, and microarchitectural timing attacks to the hypervisor.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !measure<br>
+                            <b>(hyperdbg)</b> !measure default<br>
+                            <b>(hyperdbg)</b> !hide pid 480<br>
+                            <b>(hyperdbg)</b> !hide name pafish.exe<br>
                         </td>
                     </tr>
-
+					
+                    <tr><td class="header" colspan="4">Display page-level address and entries.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(windbg)</b> !pte fffff8035d3ff000<br>
+                        </td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !pte fffff8035d3ff000<br>
+                        </td>
+                    </tr>    
+					
                     </tbody></table>
                     <p>
                 </p></div>
@@ -1947,6 +1992,20 @@
                         </td>
                         <td class="content">
                             <b>(hyperdbg)</b> ? printf("Here is some text");<br>
+                        </td>
+                    </tr>
+					
+                    <tr><td class="header" colspan="4">Configure symbol server.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> .sympath C:\MyApp;srv*C:\symbols <br>
+                            <b>(windbg)</b> .reload /f <br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> .sympath SRV*c:\Symbols <br>
+                            <b>(hyperdbg)</b> .sym reload <br>
                         </td>
                     </tr>
 
