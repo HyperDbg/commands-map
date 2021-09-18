@@ -338,7 +338,6 @@
                         </td>
                     </tr>
 
-
                     <tr><td class="header" colspan="4">Do a source level single step over in the currently selected thread.</td></tr>
                     <tr>
                         <td class="content">
@@ -355,6 +354,15 @@
                         </td>
                         <td class="content">
                             <b>(hyperdbg)</b> p<br>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Instrumentation step-in in which it guarantees that all the other cores and threads remain halted while debuggee is stepping (kernel-to-user and user-to-kernel stepping).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> i<br>
                     </tr>
 
                     <tr><td class="header" colspan="4">Do an instruction level single step in the currently selected thread.</td></tr>
@@ -734,6 +742,7 @@
                             <b>(windbg)</b> ba w4 0xff349068<br>
                         </td>
                         <td class="content">
+						    <i>There is no limitation to size and count of memory access breakpoints in HyperDbg.</i><br>
 						    <b>(hyperdbg)</b> !monitor rw 0xff349068 0xff349f50<br>
 						</td>
                     </tr>
@@ -1489,7 +1498,7 @@
                         </td>
                     </tr>
 
-                    <tr><td class="header" colspan="4">Disassemble 20 instructions from a given address.</td></tr>
+                    <tr><td class="header" colspan="4">Disassemble 20 instructions from a given virtual address.</td></tr>
                     <tr>
                         <td class="content">
                             <b>(gdb)</b> x/20i 0x1eb8
@@ -1503,6 +1512,18 @@
                         </td>
 						<td class="content">
                             <b>(hyperdbg)</b> u 0x1eb8 l 20
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Disassemble 20 instructions from a given physical address.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> up 0x1000 l20
+                        </td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !u 0x1000 l 20
                         </td>
                     </tr>
 
@@ -1694,9 +1715,10 @@
 
                     </tbody></table>
                     <p>
-                </p></div
+                </p></div>
             <div class="postfooter"></div>
-            <h1 class="postheader">HyperDbg-specific Commands</h1>
+			
+            <h1 class="postheader">HyperDbg-specific Events</h1>
                 <div class="post">
                     <p>
                     </p><table class="stats" width="900" cellspacing="0">
@@ -1707,24 +1729,184 @@
                         <td class="hed" width="25%">HyperDbg</td>
                     </tr>
 
-
-
-                    <tr><td class="header" colspan="4">Test section.</td></tr>
+                    <tr><td class="header" colspan="4">Classic hidden-hooks using Extended Page-Table (EPT) on a special process.</td></tr>
                     <tr>
                         <td class="content"></td>
                         <td class="content"></td>
                         <td class="content"></td>
 						<td class="content">
-                            <b>(hyperdbg)</b> test command<br>
+                            <b>(hyperdbg)</b> !epthook 0xbffff3c0 pid 4<br>
                         </td>
                     </tr>
 
+                    <tr><td class="header" colspan="4">Fast hidden hooks (detours) using Extended Page-Table (EPT).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !epthook2 0xbffff3c0 <br>
+                        </td>
+                    </tr>
 
+                    <tr><td class="header" colspan="4">Hook a special system-call.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !syscall 0x55 <br>
+                            <b>(hyperdbg)</b> !syscall2 0x55 <br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Hook sysret instructions.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !sysret<br>
+                            <b>(hyperdbg)</b> !sysret2<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Monitor for memory access and Memory Mapped I/O (MMIO).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !monitor rw 0xff349068 0xff349f50<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Intercept and modify I/O port usage (IN and OUT instructions) on a special port.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !ioin 0x3f8<br>
+                            <b>(hyperdbg)</b> !ioout 0x3f8<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Detect reads and writes into a special (0xc0000082) Model-Specific Registers (MSRs).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !msrread 0xc0000082<br>
+                            <b>(hyperdbg)</b> !msrwrite 0xc0000082<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Detect any execution of VMCALLs (Hypercalls).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !vmcall<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Detect any execution of CPUID instruction.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !cpuid<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Detect any access to debug registers.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(hyperdbg)</b> !dr<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Hook any entries in Interrupt Descriptor Table (IDT).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <i>For first, 32 entries of IDT:</i>
+                            <b>(hyperdbg)</b> !exception 0xe<br>
+                            <i>For IDT entries between 32-256:</i>
+                            <b>(hyperdbg)</b> !interrupt 0x2f<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Intercept any execution of instructions relating to Time Stamp Counters and Performance Counters.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <i>For RDTSC/RDTSCP:</i><br>
+                            <b>(hyperdbg)</b> !tsc<br>
+                            <i>For RDPMC:</i><br>
+                            <b>(hyperdbg)</b> !pmc<br>
+                        </td>
+                    </tr>
+
+                    </tbody></table>
+                    <p>
+                </p></div>
+				
+            <div class="postfooter"></div>
+			
+			    <h1 class="postheader">Kernel-specific Commands</h1>
+                <div class="post">
+                    <p>
+                    </p><table class="stats" width="900" cellspacing="0">
+                    <tbody><tr>
+                        <td class="hed" width="25%">GDB</td>
+                        <td class="hed" width="25%">LLDB</td>
+                        <td class="hed" width="25%">WinDbg / CDB</td>
+                        <td class="hed" width="25%">HyperDbg</td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Read and write into Model-Specific Registers (MSRs).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(windbg)</b> rdmsr 0xc0000082<br>
+                            <b>(windbg)</b> wrmsr 0xc0000082 fffff8035d3ff000<br>
+                        </td>						<td class="content">
+                            <b>(hyperdbg)</b> rdmsr 0xc0000082<br>
+                            <b>(hyperdbg)</b> wrmsr 0xc0000082 fffff8035d3ff000<br>
+                        </td>
+                    </tr>
+					
+                    <tr><td class="header" colspan="4">Read and write into Model-Specific Registers (MSRs).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+						<td class="content">
+                            <b>(windbg)</b> !vtop 98fd fffff8035d3ff000<br>
+                        </td>						
+						<td class="content">
+                            <b>(hyperdbg)</b> !va2pap fffff8035d3ff000<br>
+                            <b>(hyperdbg)</b> !pa2va 90e00<br>
+                        </td>
+                    </tr>
 
                     </tbody></table>
                     <p>
                 </p></div>
             <div class="postfooter"></div>
+			
             <h1 class="postheader">Miscellaneous</h1>
                 <div class="post">
                     <p>
