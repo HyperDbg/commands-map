@@ -34,7 +34,7 @@
 									<td class="hed" width="25%">HyperDbg</td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Launch a process no arguments.</td>
+									<td class="header" colspan="4">Launch a process with no arguments.</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>(gdb)</b> run
@@ -53,14 +53,11 @@
 										<br> <b>(gdb)</b> r &lt;args&gt; </td>
 									<td class="content"> <b>(lldb)</b> process launch -- &lt;args&gt;
 										<br> <b>(lldb)</b> r &lt;args&gt; </td>
-									<td class="content"> <b>(windbg)</b> .create &lt;args&gt;; g
-										<br> followed by
-										<br> <b>(windbg)</b> g
-										<br> </td>
+									<td class="content"> <b>(windbg)</b> .create &lt;args&gt;; g </td>
 									<td class="content"> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Launch a process for with arguments <b><code>a.out 1 2 3</code></b> without having to supply the args every time.</td>
+									<td class="header" colspan="4">Launch a process with arguments "a.out 1 2 3" without having to supply the args every time.</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>%</b> gdb --args a.out 1 2 3
@@ -108,7 +105,7 @@
 									<td class="content"> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Launch a process with arguments in new terminal window (Mac OS X only).</td>
+									<td class="header" colspan="4">Launch a process with arguments in a new terminal window (Mac OS X only).</td>
 								</tr>
 								<tr>
 									<td class="content"> </td>
@@ -119,7 +116,7 @@
 									<td class="content"></td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Launch a process with arguments in existing terminal
+									<td class="header" colspan="4">Launch a process with arguments in the existing terminal
 										<cope>/dev/ttys006 (Mac OS X only).</cope>
 									</td>
 								</tr>
@@ -132,7 +129,7 @@
 									<td class="content"></td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Print loaded shared libraries when launching application</td>
+									<td class="header" colspan="4">Print loaded shared libraries when launching application.</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>(gdb)</b> set print symbol-loading full
@@ -152,7 +149,7 @@
 										<br> <b>(lldb)</b> set se target.env-vars DEBUG=1
 										<br> <b>(lldb)</b> env DEBUG=1
 										<br> </td>
-									<td class="content"> (<i>No equivalent command.</i>) </td>
+									<td class="content"> </td>
 									<td class="content"> </td>
 								</tr>
 								<tr>
@@ -164,7 +161,7 @@
 									<td class="content"> <b>(lldb)</b> settings remove target.env-vars DEBUG
 										<br> <b>(lldb)</b> set rem target.env-vars DEBUG
 										<br> </td>
-									<td class="content"> (<i>No equivalent command.</i>) </td>
+									<td class="content"> </td>
 									<td class="content"> </td>
 								</tr>
 								<tr>
@@ -185,7 +182,7 @@
 									<td class="content"> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Set environment variables for process and launch process in one command.</td>
+									<td class="header" colspan="4">Set environment variables for the process and launch the process in one command.</td>
 								</tr>
 								<tr>
 									<td class="content"> </td>
@@ -284,7 +281,7 @@
 									<td class="content"> <b>(hyperdbg)</b> p
 										<br> </tr>
 								<tr>
-									<td class="header" colspan="4">Instrumentation step-in in which it guarantees that all the other cores and threads remain halted while debuggee is stepping (kernel-to-user and user-to-kernel stepping).</td>
+									<td class="header" colspan="4">Instrumentation step in, in which it guarantees that all the other cores and threads remain halted while debuggee is stepping (kernel-to-user and user-to-kernel stepping).</td>
 								</tr>
 								<tr>
 									<td class="content"></td>
@@ -535,7 +532,7 @@
 									<td class="content"></td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Set a conditional breakpoint</td>
+									<td class="header" colspan="4">Set a conditional breakpoint.</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>(gdb)</b> break foo if strcmp(y,"hello") == 0
@@ -600,8 +597,11 @@
 									<td class="content"> <b>(lldb)</b> watchpoint set variable global_var
 										<br> <b>(lldb)</b> wa s v global_var
 										<br> </td>
-									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(windbg)</b> ba w4 global_var
+										<br> <b>(lldb)</b> wa s v global_var
+										<br> </td>
+									<td class="content"> <b>(hyperdbg)</b> !monitor w global_var global_var+20
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Set a watchpoint on a memory location when it is written into. The size of the region to watch for defaults to the pointer size if no '-x byte_size' is specified. This command takes raw input, evaluated as an expression returning an unsigned integer pointing to the start of the region, after the '--' option terminator.</td>
@@ -635,7 +635,8 @@
 										<br> (int32_t) global = 5
 										<br> </td>
 									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(hyperdbg)</b> !monitor w global_var global_var+20 condition { 90 90 90}
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">List all watchpoints.</td>
@@ -711,7 +712,7 @@
 									<td class="content"></td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Show the contents of local variable "bar".</td>
+									<td class="header" colspan="4">Show the contents of the local variable "bar".</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>(gdb)</b> p bar
@@ -720,11 +721,13 @@
 										<br> <b>(lldb)</b> fr v bar
 										<br> <b>(lldb)</b> p bar
 										<br> </td>
-									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(windbg)</b> dx bar
+										<br> </td>
+									<td class="content"> <b>(hyperdbg)</b> dc bar
+										<br> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Show the contents of local variable "bar" formatted as hex.</td>
+									<td class="header" colspan="4">Show the contents of the local variable "bar" formatted as hex.</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>(gdb)</b> p/x bar
@@ -732,11 +735,13 @@
 									<td class="content"> <b>(lldb)</b> frame variable --format x bar
 										<br> <b>(lldb)</b> fr v -f x bar
 										<br> </td>
-									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(windbg)</b> .formats bar
+										<br> </td>
+									<td class="content"> <b>(hyperdbg)</b> .formats bar
+										<br> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Show the contents of global variable "baz".</td>
+									<td class="header" colspan="4">Show the contents of the global variable "baz".</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>(gdb)</b> p baz
@@ -783,7 +788,7 @@
 										<br> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Find the address of a global variable "baz".</td>
+									<td class="header" colspan="4">Find the address of the global variable "baz".</td>
 								</tr>
 								<tr>
 									<td class="content"></td>
@@ -863,7 +868,7 @@
 									<td class="content"></td>
 									<td class="content"> <b>(windbg)</b> !eb 0x1200 0x12
 										<br> </td>
-									<td class="content"> <b>(hyperdbg)</b> !eb 0x2ae4 0x12
+									<td class="content"> <b>(hyperdbg)</b> !eb 0x1200 0x12
 										<br> </td>
 								</tr>
 							</tbody>
@@ -1202,19 +1207,13 @@
 										<br> <b>(lldb)</b> register read/t rax
 										<br> <b>(lldb)</b> p/t $rax
 										<br> </td>
-									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(windbg)</b> .formats rax
+										<br> </td>
+									<td class="content"> <b>(hyperdbg)</b> .formats @rax
+										<br> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Show the general purpose registers as different formats.</td>
-								</tr>
-								<tr>
-									<td class="content"></td>
-									<td class="content"></td>
-									<td class="content">(windbg) .formats rax</td>
-									<td class="content">(hyperdbg) .formats @rax</td>
-								</tr>
-								<tr>
+		
 									<td class="header" colspan="4">Read memory from address 0xbffff3c0 and show 4 hex uint32_t values.</td>
 								</tr>
 								<tr>
@@ -1290,7 +1289,7 @@
 									<td class="content"></td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Get information about a specific heap allocation and cast the result to any dynamic type that can be deduced (available on Mac OS X only)</td>
+									<td class="header" colspan="4">Get information about a specific heap allocation and cast the result to any dynamic type that can be deduced (available on Mac OS X only).</td>
 								</tr>
 								<tr>
 									<td class="content"> </td>
@@ -1354,7 +1353,7 @@
 									<td class="content"> <b>(hyperdbg)</b> u 0x1eb8 l 100 </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Disassemble 20 instructions from a given virtual address.</td>
+									<td class="header" colspan="4">Disassemble 20 instructions (or 20 bytes) from a given virtual address.</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>(gdb)</b> x/20i 0x1eb8 </td>
@@ -1365,7 +1364,7 @@
 									<td class="content"> <b>(hyperdbg)</b> u 0x1eb8 l 20 </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Disassemble 20 instructions from a given physical address.</td>
+									<td class="header" colspan="4">Disassemble 20 bytes from a given physical address.</td>
 								</tr>
 								<tr>
 									<td class="content"></td>
@@ -1621,7 +1620,7 @@
 										<br> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Detect reads and writes into a special (0xc0000082) Model-Specific Registers (MSRs).</td>
+									<td class="header" colspan="4">Detect reads and writes into a special (0xc0000082) Model-Specific Register (MSR).</td>
 								</tr>
 								<tr>
 									<td class="content"></td>
@@ -1715,7 +1714,7 @@
 										<br> </td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Read and write into Model-Specific Registers (MSRs).</td>
+									<td class="header" colspan="4">Convert virtual address to physical address and physical address to virtual address.</td>
 								</tr>
 								<tr>
 									<td class="content"></td>
@@ -1725,6 +1724,7 @@
 									<td class="content"> <i>Virtual to physical address conversion:</i>
 										<br> <b>(hyperdbg)</b> !va2pa fffff8035d3ff000
 										<br> <i>Physical to virtual address conversion:</i>
+										<br> <b>(hyperdbg)</b> !pa2va 80550
 										<br>
 										<tr>
 											<td class="header" colspan="4">Try to hide debugger from anti-debugging methods, and microarchitectural timing attacks to the hypervisor.</td>
@@ -1740,7 +1740,7 @@
 												<br> </td>
 										</tr>
 										<tr>
-											<td class="header" colspan="4">Display page-level address and entries.</td>
+											<td class="header" colspan="4">Display page-level address translation and page table entries.</td>
 										</tr>
 										<tr>
 											<td class="content"></td>
@@ -1767,7 +1767,7 @@
 									<td class="hed" width="25%">HyperDbg</td>
 								</tr>
 								<tr>
-									<td class="header" colspan="4">Search command help for a keyword.</td>
+									<td class="header" colspan="4">Search help for a keyword.</td>
 								</tr>
 								<tr>
 									<td class="content"> <b>(gdb)</b> apropos keyword
@@ -1789,7 +1789,7 @@
 										<br> </td>
 									<td class="content"> <b>(windbg)</b> .printf "Here is some text"
 										<br> </td>
-									<td class="content"> <b>(hyperdbg)</b> ? printf("Here is some text");
+									<td class="content"> <b>(hyperdbg)</b> ? printf("Here is some text\n");
 										<br> </td>
 								</tr>
 								<tr>
@@ -1876,7 +1876,7 @@
 										<br> <b>(gdb)</b> <i>... (commands) ...</i>
 										<br> <b>(gdb)</b> set logging off
 										<br> </td>
-									<td class="content"> (<i>It's possible through python scripts.</i>)
+									<td class="content"> (<i>It's possible through custom python scripts.</i>)
 										<br> </td>
 									<td class="content"> <b>(windbg)</b> .logopen log.txt
 										<br> <b>(windbg)</b> <i>... (commands) ...</i>
@@ -1894,7 +1894,8 @@
 					<div class="postfooter"></div>
 					<h1 class="postheader">License</h1>
 					<div class="post">
-						<p> This page is last updated at 30th September 2021, and is licensed under the standard LLVM License, an open source "BSD-style" license.</p>
+						<p> * Last updated at <b>30th September 2021</b>.
+						<p> This page is licensed under the standard LLVM License, an open source "BSD-style" license.</p>
 					</div>
 					<div class="postfooter"></div>
 				</div>
