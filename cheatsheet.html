@@ -449,6 +449,32 @@
                         <td class="content">
                         </td>
                     </tr>
+					
+                    <tr><td class="header" colspan="4">Change the current operating core to core "1".</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> ~1s
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> ~ 1
+                        </td>
+                    </tr>
+					
+                    <tr><td class="header" colspan="4">Change the current process memory layout (kernel-debugging).</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> .process /i 863c22f0 <br>
+                            <b>(windbg)</b> g <br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> .process pid 1ddc <br>
+                            <b>(hyperdbg)</b> g <br>
+                        </td>
+                    </tr>
 
                     <tr><td class="header" colspan="4">Detach from the current target process.</td></tr>
                     <tr>
@@ -678,7 +704,7 @@
                         <td class="content">
                             <b>(hyperdbg)</b> bl<br>
                         </td>
-                    </tr>image list
+                    </tr>
 
                     <tr><td class="header" colspan="4">Delete a breakpoint.</td></tr>
                     <tr>
@@ -806,7 +832,7 @@
                 </p></div>
 
             <div class="postfooter"></div>
-            <h1 class="postheader">Examining Variables</h1>
+            <h1 class="postheader">Examining and Modifying Variables</h1>
                 <div class="post">
                     <p>
                     </p><table class="stats" width="900" cellspacing="0">
@@ -895,6 +921,42 @@
                         </td>                 
 					</tr>
 					
+                    <tr><td class="header" colspan="4">Show the contents of memory at physical address "0x12000".</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> db 0x12000 <br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> db 0x12000 <br>
+                        </td>                 
+					</tr>
+					
+                    <tr><td class="header" colspan="4">Search for "H" starting from memory address "0x554000".</td></tr>
+                    <tr>
+                        <td class="content">
+                            <b>(gdb)</b> find 0x554000 to 0x554fff, 'H' <br>
+                        </td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> s -d 0x554000  Lfff 'H' <br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> sb 0x554000 l ffff 48 <br>
+                        </td>                 
+					</tr>
+					
+                    <tr><td class="header" colspan="4">Search for "H" starting from physical memory address "0x12000".</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> !sb 0x12000 l ffff 48 <br>
+                        </td>                 
+					</tr>
+					
                     <tr><td class="header" colspan="4">Find the address of a global variable "baz".</td></tr>
                     <tr>
                         <td class="content"></td>
@@ -958,6 +1020,34 @@
                         </td>
                         <td class="content"></td>
                         <td class="content"></td>
+                    </tr>
+					
+                    <tr><td class="header" colspan="4">Edit a byte at virtual address "0x2ae4".</td></tr>
+                    <tr>
+                        <td class="content">
+                            <b>(gdb)</b> set {char}0x2ae4=0x12<br>
+                        </td>
+                        <td class="content">
+                            <b>(lldb)</b> memory write 0x2ae4 0x12<br>
+                        </td>
+                        <td class="content">
+                            <b>(windbg)</b> eb 0x2ae4 0x12<br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> eb 0x2ae4 0x12<br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Edit a byte at physical address "0x1200".</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> !eb 0x1200 0x12<br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> !eb 0x2ae4 0x12<br>
+                        </td>
                     </tr>
 
                     </tbody></table>
@@ -1260,8 +1350,12 @@
                         <td class="content">
                             <b>(lldb)</b> register write rax 123<br>
                         </td>
-                        <td class="content"></td>
-                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> r rax = 123<br>
+                        </td>                        
+						<td class="content">
+                            <b>(hyperdbg)</b> r @rax = 123<br>
+                        </td>
                     </tr>
 
                     <tr><td class="header" colspan="4">Skip 8 bytes ahead of the current program counter (instruction pointer). Note that we use backticks to evaluate an expression and insert the scalar result in LLDB.</td></tr>
@@ -1995,6 +2089,18 @@
                         </td>
                     </tr>
 					
+                    <tr><td class="header" colspan="4">Show processor information.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(windbg)</b> !cpuinfo <br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> cpu <br>
+                        </td>
+                    </tr>
+					
                     <tr><td class="header" colspan="4">Configure symbol server.</td></tr>
                     <tr>
                         <td class="content"></td>
@@ -2006,6 +2112,42 @@
                         <td class="content">
                             <b>(hyperdbg)</b> .sympath SRV*c:\Symbols <br>
                             <b>(hyperdbg)</b> .sym reload <br>
+                        </td>
+                    </tr>
+
+                    <tr><td class="header" colspan="4">Run a script.</td></tr>
+                    <tr>
+                        <td class="content">
+                            <b>(gdb)</b> source -v script.txt <br>
+                        </td>
+                        <td class="content">
+                            <b>(lldb)</b> command script import script.py <br>
+                        </td>
+                        <td class="content">
+                            <b>(windbg)</b> $&lt;script.txt </br>
+                            <b>(windbg)</b> $&gt;&lt;script.txt </br>
+                            <b>(windbg)</b> $$&lt;script.txt </br>
+                            <b>(windbg)</b> $$&gt;&lt;script.txt </br>
+                            <b>(windbg)</b> $$&gt;a&lt; "script.txt" "First one" Two "Three More" </br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> .script script.txt <br>
+                        </td>
+                    </tr>
+					
+                    <tr><td class="header" colspan="4">Perform output redirection.</td></tr>
+                    <tr>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content"></td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> output create MyOutputName1 file output.txt <br>
+                            <b>(hyperdbg)</b> output create MyOutputName2 tcp 192.168.1.10:8080 <br>
+                            <b>(hyperdbg)</b> output create MyOutputName3 namedpipe \\.\Pipe\HyperDbgOutput <br>
+                            <b>(hyperdbg)</b> output open MyOutputName1 <br>
+                            <b>(hyperdbg)</b> output open MyOutputName2 <br>
+                            <b>(hyperdbg)</b> output open MyOutputName3 <br>
+                            <i>(The above outputs can be used in events.)</i> <br>
                         </td>
                     </tr>
 
@@ -2033,6 +2175,29 @@
                         <td class="content"></td>
                     </tr>
 
+                    <tr><td class="header" colspan="4">Save the results of the commands into a log file.</td></tr>
+                    <tr>
+                        <td class="content">
+                            <b>(gdb)</b> set logging on <br>
+                            <b>(gdb)</b> set logging file /tmp/log.txt<br>
+                            <b>(gdb)</b> <i>... (commands) ...</i><br>
+                            <b>(gdb)</b> set logging off<br>
+                        </td>
+                        <td class="content">
+                            (<i>It's possible through python scripts.</i>)<br>
+                        </td>
+                        <td class="content">
+                            <b>(windbg)</b> .logopen log.txt <br>
+                            <b>(windbg)</b> <i>... (commands) ...</i><br>
+                            <b>(windbg)</b> .logclose<br>
+                        </td>
+                        <td class="content">
+                            <b>(hyperdbg)</b> .logopen log.txt <br>
+                            <b>(hyperdbg)</b> <i>... (commands) ...</i><br>
+                            <b>(hyperdbg)</b> .logclose<br>
+                        </td>
+                    </tr>
+
                     </tbody></table>
                     <p>
                 </p></div>
@@ -2042,13 +2207,9 @@
                 <h1 class="postheader">License</h1>
                 <div class="post">
                     <p>
-                    This page is licensed under the standard LLVM License, an open source "BSD-style" license.
-                    </p><p>
-                </p></div>
-
+                    This page is last updated at 30th September 2021, and is licensed under the standard LLVM License, an open source "BSD-style" license.</p>
+				</div>
                 <div class="postfooter"></div>
-
-
             </div>
         </div>
     </div>
