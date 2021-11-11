@@ -370,6 +370,17 @@
 									<td class="content"> <b>(hyperdbg)</b> ~ 1 </td>
 								</tr>
 								<tr>
+									<td class="header" colspan="4">Show list of active processes (kernel-debugging).</td>
+								</tr>
+								<tr>
+									<td class="content"></td>
+									<td class="content"></td>
+									<td class="content"> <b>(windbg)</b> !process 0 0
+										<br> </td>
+									<td class="content"> <b>(hyperdbg)</b> .process list
+										<br> </td>
+								</tr>
+								<tr>
 									<td class="header" colspan="4">Change the current process memory layout (kernel-debugging).</td>
 								</tr>
 								<tr>
@@ -379,6 +390,8 @@
 										<br> <b>(windbg)</b> g
 										<br> </td>
 									<td class="content"> <b>(hyperdbg)</b> .process pid 1ddc
+										<br> <b>(hyperdbg)</b> g
+										<br><b>(hyperdbg)</b> .process process ffff948cba0eb080
 										<br> <b>(hyperdbg)</b> g
 										<br> </td>
 								</tr>
