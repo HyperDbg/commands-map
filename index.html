@@ -54,7 +54,7 @@
 									<td class="content"> <b>(lldb)</b> process launch -- &lt;args&gt;
 										<br> <b>(lldb)</b> r &lt;args&gt; </td>
 									<td class="content"> <b>(windbg)</b> .create &lt;args&gt;; g </td>
-									<td class="content"> </td>
+									<td class="content"> <b>(hyperdbg)</b> .start &lt;args&gt; </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Launch a process with arguments "a.out 1 2 3" without having to supply the args every time.</td>
@@ -78,7 +78,9 @@
 										<br> <b>(windbg)</b> g
 										<br> ...
 										<br> </td>
-									<td class="content"> </td>
+										<td class="content"> <b>(hyperdbg)</b> .start a.out 1 2 3
+										<br> <b>(hyperdbg)</b> .restart
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Or:</td>
@@ -102,7 +104,12 @@
 										<br> <b>(windbg)</b> g
 										<br> ...
 										<br> </td>
-									<td class="content"> </td>
+									<td class="content"> <b>(hyperdbg)</b> .kill
+										<br> <b>(hyperdbg)</b> .start a.out &lt;args&gt;
+										<br> ...
+										<br> <b>(hyperdbg)</b> g
+										<br> ...
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Launch a process with arguments in a new terminal window (Mac OS X only).</td>
@@ -136,8 +143,8 @@
 										<br> </td>
 									<td class="content"> <b>(lldb)</b> env DYLD_PRINT_LIBRARIES=1
 										<br> </td>
-									<td class="content"> (<i>Need to figure it out.</i>) </td>
-									<td class="content"> </td>
+									<td class="content"> <b>(windbg)</b> lm
+									<td class="content"> <b>(hyperdbg)</b> lm
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Set environment variables for process before launching.</td>
@@ -424,7 +431,7 @@
 									<td class="content"> </td>
 									<td class="content"> </td>
 									<td class="content"> <b>(windbg)</b> qd </td>
-									<td class="content"> </td>
+									<td class="content"> <b>(hyperdbg)</b> .detach </td>
 								</tr>
 							</tbody>
 						</table>
@@ -709,7 +716,9 @@
 									<td class="content"> <b>(windbg)</b> kp 1
 										<br> <b>(windbg)</b> dv
 										<br> </td>
-									<td class="content"></td>
+									<td class="content"> <b>(hyperdbg)</b> kd
+										<br> <b>(hyperdbg)</b> kq
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Show the local variables for the current frame.</td>
@@ -1017,7 +1026,8 @@
 										<br> </td>
 									<td class="content"> <b>(windbg)</b> ~*
 										<br> </td>
-									<td class="content"></td>
+									<td class="content"> <b>(hyperdbg)</b> .switch
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Select thread 1 as the default thread for subsequent commands.</td>
@@ -1029,7 +1039,8 @@
 										<br> <b>(lldb)</b> t 1
 										<br> </td>
 									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(hyperdbg)</b> .switch tid 1
+										<br> </td>		
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Show the stack backtrace for the current thread.</td>
@@ -1042,7 +1053,8 @@
 										<br> </td>
 									<td class="content"> <b>(windbg)</b> k
 										<br> </td>
-									<td class="content"></td>
+									<td class="content"> <b>(hyperdbg)</b> k
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Show the stack backtraces for all threads.</td>
@@ -1125,7 +1137,8 @@
 										<br> <b>(lldb)</b> fr s -r-3
 										<br> </td>
 									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(hyperdbg)</b> k base @rsp-10
+										<br> </td>							
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Show the general purpose registers for the current thread.</td>
@@ -1135,8 +1148,10 @@
 										<br> </td>
 									<td class="content"> <b>(lldb)</b> register read
 										<br> </td>
-									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(windbg)</b> r
+										<br> </td>
+									<td class="content"> <b>(hyperdbg)</b> r
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Write a new decimal value '123' to the current thread register 'rax'.</td>
@@ -1159,8 +1174,10 @@
 										<br> </td>
 									<td class="content"> <b>(lldb)</b> register write pc `$pc+8`
 										<br> </td>
-									<td class="content"></td>
-									<td class="content"></td>
+									<td class="content"> <b>(windbg)</b> r rip = rip+8
+										<br> </td>
+									<td class="content"> <b>(hyperdbg)</b> r @rip = @rip+8
+										<br> </td>
 								</tr>
 								<tr>
 									<td class="header" colspan="4">Show the general purpose registers for the current thread formatted as <b>signed decimal</b>. LLDB tries to use the same format characters as <b>printf(3)</b> when possible. Type "help format" to see the full list of format specifiers.</td>
@@ -1907,7 +1924,7 @@
 					<div class="postfooter"></div>
 					<h1 class="postheader">License</h1>
 					<div class="post">
-						<p> * Last updated at <b>30th September 2021</b>.
+						<p> * Last updated at <b>6th July 2022</b>.
 						<p> This page is licensed under the standard LLVM License, an open source "BSD-style" license.</p>
 					</div>
 					<div class="postfooter"></div>
